@@ -32,8 +32,8 @@ public class Plan {
         this.postedBy = requestDto.getPostedBy();
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.postedAt = LocalDateTime.now(); // 게시물 생성 시점에 현재 시간을 설정
-        this.updatedAt = LocalDateTime.now(); // 초기 생성 시점에 현재 시간을 설정
+        this.postedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void update(PlanRequestDto requestDto) {
