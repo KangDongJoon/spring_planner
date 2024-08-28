@@ -1,0 +1,48 @@
+package com.sparta.planner.entity;
+
+import com.sparta.planner.dto.PlanRequestDto;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@Table(name ="plans")
+public class Plan {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    private String postedBy;
+    @Column(nullable = false)
+    private String title;
+    @Column(nullable = false)
+    private String content;
+    private LocalDateTime postedAt;
+    private LocalDateTime updatedAt;
+
+    public Plan(PlanRequestDto requestDto) {
+        this.postedBy = requestDto.getPostedBy();
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.postedAt = LocalDateTime.now(); // 게시물 생성 시점에 현재 시간을 설정
+        this.updatedAt = LocalDateTime.now(); // 초기 생성 시점에 현재 시간을 설정
+    }
+
+    public void update(PlanRequestDto requestDto) {
+        if(requestDto.getTitle() != null){
+            this.title = requestDto.getTitle();
+        }
+        if(requestDto.getContent() != null){
+            this.content = requestDto.getContent();
+        }
+        this.updatedAt = LocalDateTime.now();
+    }
+}
