@@ -5,6 +5,7 @@ import com.sparta.planner.dto.PlanResponseDto;
 import com.sparta.planner.entity.Plan;
 import com.sparta.planner.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,5 +46,16 @@ public class PlanService {
         plan.update(requestDto);
 
         return new PlanResponseDto(plan);
+    }
+
+    public ResponseEntity<String> deletePlan(Long id) {
+        // DB 조회
+        Plan plan = planRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.")
+                );
+
+        planRepository.delete(plan);
+
+        return ResponseEntity.ok("일정 및 일정에 작성 된 댓글이 성공적으로 삭제되었습니다.");
     }
 }

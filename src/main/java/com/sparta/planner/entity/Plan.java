@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -27,6 +29,9 @@ public class Plan {
     private String content;
     private LocalDateTime postedAt;
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public Plan(PlanRequestDto requestDto) {
         this.postedBy = requestDto.getPostedBy();
