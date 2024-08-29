@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CommentResponseDto {
     private Long id;
-    private Long planId;
     private String comment;
     private String commentedBy;
     private LocalDateTime commentedAt;
@@ -20,7 +19,6 @@ public class CommentResponseDto {
 
     public CommentResponseDto(Comment comment){
         this.id = comment.getId();
-        this.planId = comment.getPlan().getId();
         this.comment = comment.getComment();
         this.commentedBy = comment.getCommentedBy();
         this.commentedAt = comment.getCommentedAt();

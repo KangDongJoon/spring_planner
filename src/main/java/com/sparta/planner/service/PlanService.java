@@ -1,14 +1,19 @@
 package com.sparta.planner.service;
 
+import com.sparta.planner.dto.CommentResponseDto;
 import com.sparta.planner.dto.PlanRequestDto;
 import com.sparta.planner.dto.PlanResponseDto;
+import com.sparta.planner.dto.PlanSaveResponseDto;
+import com.sparta.planner.entity.Comment;
 import com.sparta.planner.entity.Plan;
 import com.sparta.planner.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +21,7 @@ public class PlanService {
 
     private final PlanRepository planRepository;
 
-    public PlanResponseDto postPlan(PlanRequestDto requestDto) {
+    public PlanSaveResponseDto postPlan(PlanRequestDto requestDto) {
         // Plan 생성 및 초기화
         Plan plan = new Plan(requestDto);
 
@@ -24,7 +29,7 @@ public class PlanService {
         Plan savePlan = planRepository.save(plan);
 
         // Dto 변환 반환
-        return new PlanResponseDto(savePlan);
+        return new PlanSaveResponseDto(savePlan);
     }
 
     public PlanResponseDto searchPlan(Long id) {
@@ -33,7 +38,14 @@ public class PlanService {
         .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.")
         );
 
-        return new PlanResponseDto(plan);
+        List<Comment> commentList = plan.getComments();
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+        for (Comment comment : commentList) {
+            commentResponseDtoList.add(new CommentResponseDto(comment));
+        }
+
+        return new PlanResponseDto(plan, commentResponseDtoList);
     }
 
     @Transactional
@@ -42,10 +54,15 @@ public class PlanService {
         Plan plan = planRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다.")
                 );
+        List<Comment> commentList = plan.getComments();
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
+        for (Comment comment : commentList) {
+            commentResponseDtoList.add(new CommentResponseDto(comment));
+        }
         plan.update(requestDto);
 
-        return new PlanResponseDto(plan);
+        return new PlanResponseDto(plan, commentResponseDtoList);
     }
 
     public ResponseEntity<String> deletePlan(Long id) {

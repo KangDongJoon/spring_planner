@@ -2,6 +2,7 @@ package com.sparta.planner.controller;
 
 import com.sparta.planner.dto.PlanRequestDto;
 import com.sparta.planner.dto.PlanResponseDto;
+import com.sparta.planner.dto.PlanSaveResponseDto;
 import com.sparta.planner.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class PlanController {
     private final PlanService planService;
 
     @PostMapping
-    public PlanResponseDto postPlan(@RequestBody PlanRequestDto requestDto){
+    public PlanSaveResponseDto postPlan(@RequestBody PlanRequestDto requestDto){
         return planService.postPlan(requestDto);
     }
 

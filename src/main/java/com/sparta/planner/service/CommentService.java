@@ -2,7 +2,6 @@ package com.sparta.planner.service;
 
 import com.sparta.planner.dto.CommentRequestDto;
 import com.sparta.planner.dto.CommentResponseDto;
-import com.sparta.planner.dto.PlanResponseDto;
 import com.sparta.planner.entity.Comment;
 import com.sparta.planner.entity.Plan;
 import com.sparta.planner.repository.CommentRepository;
@@ -38,7 +37,7 @@ public class CommentService {
     }
 
     public List<CommentResponseDto> searchAllComment(Long planId) {
-        List<Comment> commentList = commentRepository.findAll();
+        List<Comment> commentList = commentRepository.findByPlanId(planId);
         List<CommentResponseDto> responseDtoList = new ArrayList<>();
 
         for (Comment comment : commentList) {

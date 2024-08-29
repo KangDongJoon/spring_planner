@@ -14,14 +14,13 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
 @Table(name ="plans")
 public class Plan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String postedBy;
     @Column(nullable = false)
     private String title;
@@ -31,7 +30,7 @@ public class Plan {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
 
     public Plan(PlanRequestDto requestDto) {
         this.postedBy = requestDto.getPostedBy();

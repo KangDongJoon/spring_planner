@@ -2,10 +2,7 @@ package com.sparta.planner.controller;
 
 import com.sparta.planner.dto.CommentRequestDto;
 import com.sparta.planner.dto.CommentResponseDto;
-import com.sparta.planner.dto.PlanRequestDto;
-import com.sparta.planner.dto.PlanResponseDto;
 import com.sparta.planner.service.CommentService;
-import com.sparta.planner.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
