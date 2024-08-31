@@ -7,9 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlanRequestDto {
-//    private String postedBy;
-    private Long userId;
-    private String title;
-    private String content;
+public class ManagerSaveRequestDto {
+    private Long planUserId; // 작성자
+    private Long managerUserId; // 임명할 담당자
 }

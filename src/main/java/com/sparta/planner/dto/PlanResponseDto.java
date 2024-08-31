@@ -3,23 +3,22 @@ package com.sparta.planner.dto;
 import com.sparta.planner.entity.Comment;
 import com.sparta.planner.entity.Plan;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
 public class PlanResponseDto {
 
-    private Long id;
-    private String postedBy;
-    private String title;
-    private String content;
-    private LocalDateTime postedAt;
-    private LocalDateTime updatedAt;
-    private List<CommentResponseDto> comments;
+    private final Long id;
+    //    private final String postedBy;
+    private final UserSaveResponseDto userDto;
+    private final String title;
+    private final String content;
+    private final LocalDateTime postedAt;
+    private final LocalDateTime updatedAt;
+    private final List<CommentResponseDto> comments;
 
     public PlanResponseDto(Plan plan, List<Comment> comments) {
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
@@ -27,7 +26,8 @@ public class PlanResponseDto {
             commentResponseDtoList.add(new CommentResponseDto(comment));
         }
         this.id = plan.getId();
-        this.postedBy = plan.getPostedBy();
+//        this.postedBy = plan.getPostedBy();
+        this.userDto = new UserSaveResponseDto(plan.getUser());
         this.title = plan.getTitle();
         this.content = plan.getContent();
         this.postedAt = plan.getPostedAt();

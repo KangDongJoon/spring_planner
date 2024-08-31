@@ -6,7 +6,9 @@ import com.sparta.planner.dto.PlanResponseDto;
 import com.sparta.planner.dto.PlanSaveResponseDto;
 import com.sparta.planner.entity.Comment;
 import com.sparta.planner.entity.Plan;
+import com.sparta.planner.entity.User;
 import com.sparta.planner.repository.PlanRepository;
+import com.sparta.planner.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,10 +25,14 @@ import java.util.List;
 public class PlanService {
 
     private final PlanRepository planRepository;
+    private final UserRepository userRepository;
 
     public PlanSaveResponseDto postPlan(PlanRequestDto requestDto) {
+        // 유저 확인
+        User user = userRepository.findById(requestDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
         // Plan 생성 및 초기화
-        Plan plan = new Plan(requestDto);
+        Plan plan = new Plan(requestDto, user);
 
         // DB 저장
         Plan savePlan = planRepository.save(plan);
@@ -84,6 +90,7 @@ public class PlanService {
         return new PlanResponseDto(plan, commentList);
     }
 
+    @Transactional
     public ResponseEntity<String> deletePlan(Long id) {
         // DB 조회
         Plan plan = planRepository.findById(id)

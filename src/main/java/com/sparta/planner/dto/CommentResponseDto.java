@@ -2,20 +2,16 @@ package com.sparta.planner.dto;
 
 import com.sparta.planner.entity.Comment;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@NoArgsConstructor
 public class CommentResponseDto {
-    private Long id;
-    private String comment;
-    private String commentedBy;
-    private LocalDateTime commentedAt;
-    private LocalDateTime commentUpdatedAt;
+    private final Long id;
+    private final String comment;
+    private final String commentedBy;
+    private final LocalDateTime commentedAt;
+    private final LocalDateTime commentUpdatedAt;
 
     public CommentResponseDto(Comment comment){
         this.id = comment.getId();

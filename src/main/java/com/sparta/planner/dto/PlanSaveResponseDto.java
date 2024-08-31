@@ -8,21 +8,18 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
 public class PlanSaveResponseDto {
-    private Long id;
-    private String postedBy;
-    private String title;
-    private String content;
-    private LocalDateTime postedAt;
-    private LocalDateTime updatedAt;
+    private final Long id;
+//    private String postedBy;
+    private final UserSaveResponseDto userDto;
+    private final String title;
+    private final String content;
 
     public PlanSaveResponseDto(Plan plan) {
         this.id = plan.getId();
-        this.postedBy = plan.getPostedBy();
+//        this.postedBy = plan.getPostedBy();
+        this.userDto = new UserSaveResponseDto(plan.getUser());
         this.title = plan.getTitle();
         this.content = plan.getContent();
-        this.postedAt = plan.getPostedAt();
-        this.updatedAt = plan.getUpdatedAt();
     }
 }
